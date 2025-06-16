@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 100px;
+}
+
+& h1 {
+  color: #fff;
+  font-size: 35px;
+  padding-bottom: 20px;
+}
+
+& form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 30px;
+
+  & button {
+    margin: 0 auto;
+    width: 120px;
+    height: 40px;
+    border-radius: 7px;
+    border: 2px solid #323232;
+    box-shadow: 4px 4px #323232;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: rgb(161, 59, 230);
+    color: #fff;
+  }
+
+  & button:active {
+    box-shadow: 0px 0px #323232;
+    transform: translate(3px, 3px);
+  }
+
+  & input {
+    border: 1px solid rgba(162, 59, 230, 0.473);
+    border-radius: 30px;
+    height: 30px;
+    outline: none;
+    font-size: 16px;
+    padding-left: 20px;
+  }
+
+  & input:focus {
+    transform: scale(1.03);
+    border: 1px solid #6c9cf5;
+  }
+}
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(56, 30, 80, 0.541);
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  width: 400px;
+
+  & p {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  & span {
+    font-weight: normal;
+    color: #fff;
+  }
+
+  & button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  & button:hover {
+    opacity: 0.5;
+  }
+}
