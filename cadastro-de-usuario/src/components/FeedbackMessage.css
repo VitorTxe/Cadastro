@@ -1,0 +1,43 @@
+.feedback-message {
+  width: 100%;
+  padding: 10px 20px;
+  margin-bottom: 0px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  color: white; /* Cor do texto padrão */
+  opacity: 0; /* Começa invisível */
+  animation: fadeInOut 5.5s forwards; /* Animação de fade */
+  position: fixed; /* Fixa o elemento na tela */
+  top: 0; /* Alinha no topo */
+  left: 0;
+}
+
+.feedback-message.success {
+  background-color: #4caf50; /* Verde */
+}
+
+.feedback-message.error {
+  background-color: #f44336; /* Vermelho */
+}
+
+/* Opcional: Animação de Fade In/Out */
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
