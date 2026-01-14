@@ -23,21 +23,21 @@ function UserForm({ createUsers }) {
     <form onSubmit={handleSubmit}>
       <h1>Cadastro de Usuários</h1>
 
-      <label htmlFor="name">Nome:</label>
+      <label htmlFor="name">Nome</label>
       <input
         placeholder="Insira seu nome"
         name="Nome"
         type="text"
         ref={inputName}
       />
-      <label htmlFor="age">Idade:</label>
+      <label htmlFor="age">Idade</label>
       <input
         placeholder="Insira sua idade"
         name="Idade"
         type="number"
         ref={inputAge}
       />
-      <label htmlFor="email">E-mail:</label>
+      <label htmlFor="email">E-mail</label>
       <input
         placeholder="Insira seu e-mail"
         name="Email"

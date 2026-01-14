@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import FeedbackMessage from "../../components/FeedbackMessage";
 import UserForm from "../../components/UseForm";
 import UseCard from "../../components/UseCard";
-import Loading from "../../components/Loading";
+import SkeletonCard from "../../components/SkeletonCard";
 
 import api from "../../services/api";
 
@@ -87,7 +87,11 @@ function Home() {
       <UserForm createUsers={createUsers} />
 
       {isLoading ? (
-        <Loading boolloader={isLoading} />
+        <>
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+        </>
       ) : users.length > 0 ? (
         users.map((user) => (
           <UseCard key={user.id} user={user} deleteUsers={deleteUsers} />
