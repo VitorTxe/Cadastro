@@ -1,47 +1,18 @@
-import "dotenv/config";
-import validator from "validator";
-import cors from "cors";
-import express from "express";
 import { PrismaClient } from "@prisma/client";
-
-const app = express();
-
-// Habilita o parsing de JSON no corpo das requisições. Essencial para receber dados em rotas POST e PUT.
-app.use(express.json());
-// Habilita o CORS para todas as rotas, permitindo requisições de diferentes origens.
-app.use(cors());
-
+import validator from "validator";
+import { capitalize } from "../utils/stringUtils.js";
 
 // Cria uma única instância do Prisma Client para ser usada em toda a aplicação, otimizando conexões com o banco.
 const prisma = new PrismaClient();
 
-// Define a porta do servidor, usando a variável de ambiente PORT (comum em serviços de deploy) ou 3000 como padrão.
-const porta = process.env.PORT || 3000;
-
-// Capitaliza a primeira letra de cada palavra em uma string.
-// Ex: "joão da silva" se torna "João Da Silva"
-function capitalize(string) {
-  return string
-    .split(" ")
-    .map((word) => {
-      if (word.length === 0) return "";
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join(" ");
-}
-
-app.post("/usuarios", async (req, res) => {
+export const criarUsuario = async (req, res) => {
   const { name, age, email } = req.body;
 
   if (!email || validator.isEmail(email) == false || typeof email !== "string") {
     return res.status(400).json({ message: "Email inválido ou não fornecido." });
   }
 
-  if (age <= 0 || age > 120) {
-    return res.status(400).json({ message: "Idade inválida" });
-  }
-
-  // 2. Operação no Banco de Dados: Bloco `try...catch` para lidar com possíveis erros.
+  // Operação no Banco de Dados: Bloco `try...catch` para lidar com possíveis erros.
   try {
     const newUser = await prisma.usuarios.create({
       data: {
@@ -60,12 +31,11 @@ app.post("/usuarios", async (req, res) => {
     }
     return res.status(500).json({ message: "Ocorreu um erro no servidor ao criar o usuário." });
   }
-});
+};
 
-app.get("/usuarios", async (req, res) => {
+export const listarUsuarios = async (req, res) => {
   try {
     const { name, email, age } = req.query;
-    // Objeto `where` que será construído dinamicamente para a consulta do Prisma.
     const where = {
       name: name,
       email: email,
@@ -78,9 +48,9 @@ app.get("/usuarios", async (req, res) => {
     console.error("Erro ao buscar usuários:", error);
     res.status(500).json({ message: "Ocorreu um erro no servidor ao buscar usuários."});
   }
-});
+};
 
-app.put("/usuarios/:id", async (req, res) => {
+export const atualizarUsuario = async (req, res) => {
   try {
     const { id } = req.params;
     const { email, name, age } = req.body;
@@ -116,9 +86,9 @@ app.put("/usuarios/:id", async (req, res) => {
     }
     res.status(500).json({ message: "Ocorreu um erro no servidor ao atualizar o usuário." });
   }
-});
+};
 
-app.delete("/usuarios/:id", async (req, res) => {
+export const deletarUsuario = async (req, res) => {
   try {
     const { id } = req.params;
     await prisma.usuarios.delete({ where: { id } });
@@ -132,13 +102,4 @@ app.delete("/usuarios/:id", async (req, res) => {
     // Para qualquer outro erro, retorna um erro genérico de servidor.
     res.status(500).json({ message: "Ocorreu um erro no servidor ao deletar o usuário." });
   }
-});
-
-// Inicia o servidor Express para escutar requisições na porta definida (apenas localmente)
-if (process.env.NODE_ENV !== "production") {
-  app.listen(porta, () => {
-    console.log(`Servidor rodando na porta ${porta}`);
-  });
-}
-
-export default app;
+};
