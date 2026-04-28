@@ -9,23 +9,23 @@ app.use(express.json());
 
 // Configuração de segurança do CORS
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173", // Permite apenas o seu frontend (ajuste a porta se necessário)
+  origin: process.env.FRONTEND_URL || "http://localhost:5173/", // Permite apenas o seu frontend (ajuste a porta se necessário)
   methods: ["GET", "POST", "PUT", "DELETE"], // Métodos HTTP permitidos
   allowedHeaders: ["Content-Type", "Authorization"] // Cabeçalhos permitidos
 };
 
 // Habilita o CORS com as opções configuradas
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use("/usuarios", usuarioRoutes);
 
 // Define a porta do servidor, usando a variável de ambiente PORT (comum em serviços de deploy) ou 3000 como padrão.
 const porta = process.env.PORT || 3000;
 
-if (process.env.NODE_ENV !== "production") {
-  app.listen(porta, () => {
-    console.log(`Servidor rodando na porta ${porta}`);
-  });
-}
+
+app.listen(porta, () => {
+  console.log(`Servidor rodando na porta ${porta}`);
+});
+
 
 export default app;
