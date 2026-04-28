@@ -9,13 +9,13 @@ app.use(express.json());
 
 // Configuração de segurança do CORS
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173/", // Permite apenas o seu frontend (ajuste a porta se necessário)
+  origin: process.env.FRONTEND_URL || "http://localhost:5173", // Permite apenas o seu frontend (ajuste a porta se necessário)
   methods: ["GET", "POST", "PUT", "DELETE"], // Métodos HTTP permitidos
   allowedHeaders: ["Content-Type", "Authorization"] // Cabeçalhos permitidos
 };
 
 // Habilita o CORS com as opções configuradas
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use("/usuarios", usuarioRoutes);
 
