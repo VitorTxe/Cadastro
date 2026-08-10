@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # Serviço do Banco de Dados (MongoDB)
+  mongodb:
+    image: mongo:latest
+    container_name: cadastro_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  # Serviço do Backend (Node.js + Prisma)
+  backend:
+    build: ./backend
+    container_name: cadastro_backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=mongodb://mongodb:27017/cadastro
+      - FRONTEND_URL=http://localhost:5173
+      - PORT=3000
+    depends_on:
+      - mongodb
+    # Permite reiniciar automaticamente se falhar
+    restart: unless-stopped
+
+  # Serviço do Frontend (React + Vite)
+  frontend:
+    build: ./frontend
+    container_name: cadastro_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
